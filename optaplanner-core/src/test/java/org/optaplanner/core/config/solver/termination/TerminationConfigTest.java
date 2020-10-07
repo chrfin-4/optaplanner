@@ -49,8 +49,7 @@ class TerminationConfigTest {
         childConfig.setSecondsSpentLimit(30L);
         parentConfig.setMinutesSpentLimit(10L);
         TerminationConfig inherited = childConfig.inherit(parentConfig);
-        //assertThat(inherited.getSecondsSpentLimit()).isNull();      // Desired behavior.
-        assertThat(inherited.getSecondsSpentLimit()).isEqualTo(30L);  // WRONG (current behavior)
+        assertThat(inherited.getSecondsSpentLimit()).isNull();
         assertThat(inherited.getMinutesSpentLimit()).isEqualTo(10L);
     }
 

@@ -512,6 +512,9 @@ public class TerminationConfig extends AbstractConfig<TerminationConfig> {
 
     @Override
     public TerminationConfig inherit(TerminationConfig inheritedConfig) {
+        if (timeSpentLimitSet(inheritedConfig)) {
+            clearTimeSpentLimit(this);
+        }
         terminationClass = ConfigUtils.inheritOverwritableProperty(terminationClass,
                 inheritedConfig.getTerminationClass());
         terminationCompositionStyle = ConfigUtils.inheritOverwritableProperty(terminationCompositionStyle,
@@ -560,6 +563,23 @@ public class TerminationConfig extends AbstractConfig<TerminationConfig> {
     @Override
     public TerminationConfig copyConfig() {
         return new TerminationConfig().inherit(this);
+    }
+
+    private static boolean timeSpentLimitSet(TerminationConfig config) {
+        return config.getDaysSpentLimit() != null
+                || config.getHoursSpentLimit() != null
+                || config.getMinutesSpentLimit() != null
+                || config.getSecondsSpentLimit() != null
+                || config.getMillisecondsSpentLimit() != null;
+    }
+
+    private static TerminationConfig clearTimeSpentLimit(TerminationConfig config) {
+        config.setDaysSpentLimit(null);
+        config.setHoursSpentLimit(null);
+        config.setMinutesSpentLimit(null);
+        config.setSecondsSpentLimit(null);
+        config.setMillisecondsSpentLimit(null);
+        return config;
     }
 
 }
